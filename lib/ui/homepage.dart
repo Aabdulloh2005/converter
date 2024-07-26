@@ -3,8 +3,8 @@ import 'package:currency_converter/bloc/currency_bloc/currency_event.dart';
 import 'package:currency_converter/bloc/currency_bloc/currency_state.dart';
 import 'package:currency_converter/ui/convertation_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -27,6 +27,10 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
+          decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              prefixIcon: Icon(Icons.search),
+              hintText: "USD"),
           controller: _textController,
           onChanged: (value) {
             context.read<CurrencyBloc>().add(

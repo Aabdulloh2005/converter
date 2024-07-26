@@ -7,7 +7,8 @@ class ConvertationScreen extends StatefulWidget {
   const ConvertationScreen({super.key, required this.currency});
 
   @override
-  _ConvertationScreenState createState() => _ConvertationScreenState();
+  State<ConvertationScreen> createState() =>
+      _ConvertationScreenState();
 }
 
 class _ConvertationScreenState extends State<ConvertationScreen> {
@@ -20,9 +21,9 @@ class _ConvertationScreenState extends State<ConvertationScreen> {
     if (amount != null) {
       setState(() {
         if (isUsdToCurrency) {
-          convertedAmount = amount * widget.currency.currency;
+          convertedAmount = amount * widget.currency.rate;
         } else {
-          convertedAmount = amount / widget.currency.currency;
+          convertedAmount = amount / widget.currency.rate;
         }
       });
     }
@@ -46,8 +47,8 @@ class _ConvertationScreenState extends State<ConvertationScreen> {
               controller: _controller,
               decoration: InputDecoration(
                 labelText: isUsdToCurrency
-                    ? 'Enter  in USD'
-                    : 'Enter  in ${widget.currency.name}',
+                    ? 'Enter amount in USD'
+                    : 'Enter amount in ${widget.currency.name}',
               ),
               keyboardType: TextInputType.number,
             ),
@@ -57,11 +58,10 @@ class _ConvertationScreenState extends State<ConvertationScreen> {
             ),
             const SizedBox(height: 20),
             Text(
-              'Converted: ${convertedAmount.toStringAsFixed(2)} ${isUsdToCurrency ? widget.currency.name : 'USD'}',
-            ),
+                'Converted Amount: $convertedAmount ${isUsdToCurrency ? widget.currency.name : 'USD'}'),
             ElevatedButton(
               onPressed: _toggleConversion,
-              child: Text('Switch'),
+              child: const Text('Switch Conversion Direction'),
             ),
           ],
         ),

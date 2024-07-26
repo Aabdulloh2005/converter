@@ -1,16 +1,13 @@
 class Currency {
   final String name;
-  final double currency;
+  final double rate;
 
-  Currency({
-    required this.currency,
-    required this.name,
-  });
+  Currency({required this.name, required this.rate});
 
   factory Currency.fromJson(Map<String, dynamic> json) {
     return Currency(
       name: json['name'],
-      currency: json['currency'],
+      rate: json['rate'],
     );
   }
 }

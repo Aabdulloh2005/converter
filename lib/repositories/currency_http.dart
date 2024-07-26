@@ -2,19 +2,13 @@ import 'dart:convert';
 import 'package:currency_converter/models/currency.dart';
 import 'package:http/http.dart' as http;
 
-class CurrencyHttpRepository {
+class CurrencyRepository {
   Future<List<Currency>> fetchCurrencies() async {
-    Uri url = Uri.parse(
-        'https://v6.exchangerate-api.com/v6/a1fb195a5e597666e18de2de/latest/USD');
-    final response = await http.get(url);
-
+    final response = await http.get(Uri.parse('https://api.exchangerate-api.com/v4/latest/USD'));
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final rates = data['conversion_rates'] as Map<String, dynamic>;
-      print(rates);
-      return rates.entries.map((entry) {
-        return Currency(name: entry.key, currency: entry.value.toDouble());
-      }).toList();
+      final data = json.decode(response.body);
+      final rates = data['rates'] as Map<String, dynamic>;
+      return rates.entries.map((e) => Currency(name: e.key, rate: e.value.toDouble())).toList();
     } else {
       throw Exception('Failed to load currencies');
     }
